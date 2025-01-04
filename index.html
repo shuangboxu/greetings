@@ -24,11 +24,14 @@
             font-size: 18px;
             margin-bottom: 10px;
         }
-        .options {
-            margin: 20px 0;
-        }
         .option {
             margin: 5px 0;
+            text-align: left; /* 保持左对齐 */
+            display: block; /* 强制选项为块级布局，确保对齐有效 */
+        }
+
+        .options {
+            text-align: left; /* 确保选项容器本身的文字左对齐 */
         }
         .submit-btn {
             background-color: #4CAF50;
@@ -91,46 +94,259 @@
         const questionScore = 2;
 
         const questions = [
-            {
-                question: "问题 1: 你知道HTML是什么吗？",
-                options: {
-                    A: "编程语言",
-                    B: "标记语言",
-                    C: "数据库",
-                    D: "操作系统"
-                },
-                correctAnswer: ["B"]
-            },
-            {
-                question: "问题 2: JavaScript 是什么类型的语言？",
-                options: {
-                    A: "标记语言",
-                    B: "编程语言",
-                    C: "数据库语言",
-                    D: "操作系统"
-                },
-                correctAnswer: ["B"]
-            },
-            {
-                question: "问题 3: CSS 是用来做什么的？",
-                options: {
-                    A: "编程",
-                    B: "布局和样式",
-                    C: "管理数据库",
-                    D: "网络安全"
-                },
-                correctAnswer: ["B"]
-            },
-            {
-                question: "问题 4: NIM 的用途是什么？(多选题)",
-                options: {
-                    A: "功能 1",
-                    B: "功能 2",
-                    C: "功能 3",
-                    D: "功能 4"
-                },
-                correctAnswer: ["A", "B"]
-            }
+        {
+        "question": "问题 1: 党的二十届三中全会提出，新时代我国社会主要矛盾发生变化，新的主要矛盾是：",
+        "options": {
+            "A": "发展不平衡不充分问题",
+            "B": "人民日益增长的物质文化需求与不平衡不充分的发展之间的矛盾",
+            "C": "资源约束和环境问题",
+            "D": "政治体制与经济体制之间的矛盾"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 2: 党的二十届三中全会提出，中国特色社会主义政治发展道路的核心要义是：",
+        "options": {
+            "A": "社会主义民主政治",
+            "B": "加强党对一切工作的领导",
+            "C": "实现人民当家作主",
+            "D": "保障公民基本权利"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 3: 党的二十届三中全会提出，全面推进乡村振兴的战略重点是：",
+        "options": {
+            "A": "增加农业产值",
+            "B": "改善农村基础设施",
+            "C": "发展现代农业，推动农业绿色发展",
+            "D": "提高农村教育水平"
+        },
+        "correctAnswer": ["C"]
+    },
+    {
+        "question": "问题 4: 党的二十届三中全会提出，中国特色社会主义经济制度的核心是：",
+        "options": {
+            "A": "改革创新",
+            "B": "开放型经济",
+            "C": "公有制为主体、多种所有制经济共同发展的基本经济制度",
+            "D": "实现共同富裕"
+        },
+        "correctAnswer": ["C"]
+    },
+    {
+        "question": "问题 5: 党的二十届三中全会提出，要推动科技创新的战略方向是：",
+        "options": {
+            "A": "加大基础研究投入，促进关键核心技术突破",
+            "B": "加强高新技术企业扶持",
+            "C": "依靠国际科技合作实现突破",
+            "D": "完善知识产权保护机制"
+        },
+        "correctAnswer": ["A"]
+    },
+    {
+        "question": "问题 6: 党的二十届三中全会提出，要加强国家治理现代化，核心目标之一是：",
+        "options": {
+            "A": "提高政治效率",
+            "B": "推动法治建设",
+            "C": "促进经济快速增长",
+            "D": "增强社会整体稳定"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 7: 党的二十届三中全会提出，要深化党和国家机构改革，重点是：",
+        "options": {
+            "A": "改进党的组织结构",
+            "B": "优化国家治理结构，提升治理效能",
+            "C": "提高行政效率，减少政府职能",
+            "D": "增强军队现代化能力"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 8: 党的二十届三中全会提出，进一步加强生态文明建设的核心任务是：",
+        "options": {
+            "A": "加快能源结构转型",
+            "B": "完善环境保护法制体系",
+            "C": "推动绿色低碳发展",
+            "D": "促进资源循环利用"
+        },
+        "correctAnswer": ["C"]
+    },
+    {
+        "question": "问题 9: 党的二十届三中全会提出，教育领域改革的主要方向是：",
+        "options": {
+            "A": "优化教育资源配置，提升教育公平性",
+            "B": "加强职业教育体系建设",
+            "C": "提高高等教育的国际化水平",
+            "D": "增强思想政治教育的权威性"
+        },
+        "correctAnswer": ["A"]
+    },
+    {
+        "question": "问题 10: 党的二十届三中全会提出，必须深化和完善的国有企业改革的方向是：",
+        "options": {
+            "A": "完全市场化",
+            "B": "增强国有资本的战略功能",
+            "C": "逐步私有化",
+            "D": "向民营企业学习"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 11: 党的二十届三中全会提出，推动中国式现代化的核心要求是：",
+        "options": {
+            "A": "深化全面改革，加强党内治理",
+            "B": "坚持党的领导和人民主权统一",
+            "C": "加强生态环境保护",
+            "D": "推动全社会共同富裕"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 12: 党的二十届三中全会提出，要推进高质量发展的关键措施是：",
+        "options": {
+            "A": "增加传统行业的投资",
+            "B": "深化供给侧结构性改革",
+            "C": "推动科技创新和产业升级",
+            "D": "加大基础设施建设投入"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 13: 党的二十届三中全会提出，要加强和创新社会治理，具体措施包括：",
+        "options": {
+            "A": "强化党对社会治理的领导",
+            "B": "提升公共服务的普惠性和公平性",
+            "C": "完善社会治理法律体系",
+            "D": "建立健全社会治安防控体系"
+        },
+        "correctAnswer": ["A"]
+    },
+    {
+        "question": "问题 14: 党的二十届三中全会提出，进一步优化产业结构的重点是：",
+        "options": {
+            "A": "增加传统行业投资",
+            "B": "促进先进制造业发展",
+            "C": "支持中小企业创新",
+            "D": "推动农村经济发展"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 15: 党的二十届三中全会提出，要促进城乡融合发展，关键措施是：",
+        "options": {
+            "A": "坚持公共资源均衡分配",
+            "B": "鼓励城市人口向乡村流动",
+            "C": "推动农业转移人口市民化",
+            "D": "强化乡村教育与医疗保障"
+        },
+        "correctAnswer": ["C"]
+    },
+    {
+        "question": "问题 16: 党的二十届三中全会明确，中国式现代化的发展模式是基于：",
+        "options": {
+            "A": "社会主义市场经济体制",
+            "B": "政治稳定",
+            "C": "高度自治的地方政府",
+            "D": "对外依赖的经济体制"
+        },
+        "correctAnswer": ["A"]
+    },
+    {
+        "question": "问题 17: 党的二十届三中全会提出的深化改革总目标是：",
+        "options": {
+            "A": "完善中国特色社会主义制度",
+            "B": "促进经济转型",
+            "C": "提高人民幸福感",
+            "D": "推动经济全球化"
+        },
+        "correctAnswer": ["A"]
+    },
+    {
+        "question": "问题 18: 党的二十届三中全会提出，要深化科技创新，需重点：",
+        "options": {
+            "A": "加强产学研合作",
+            "B": "完善知识产权保护",
+            "C": "增加科技预算",
+            "D": "引进外国技术"
+        },
+        "correctAnswer": ["A"]
+    },
+    {
+        "question": "问题 19: 党的二十届三中全会强调，要加大对外开放的措施是：",
+        "options": {
+            "A": "实行贸易保护政策",
+            "B": "扩大自由贸易区建设",
+            "C": "降低外资准入门槛",
+            "D": "增加跨国公司税收"
+        },
+        "correctAnswer": ["B"]
+    },
+    {
+        "question": "问题 20: 党的二十届三中全会提出，要加强党风廉政建设，主要措施是：",
+        "options": {
+            "A": "强化纪律检查和监督",
+            "B": "提高领导干部廉政风险防控能力",
+            "C": "推进政务公开",
+            "D": "增加政府透明度"
+        },
+        "correctAnswer": ["A"]
+    },
+    {
+        "question": "问题 21: 党的二十届三中全会提出，推动经济高质量发展的关键措施包括哪些？",
+        "options": {
+            "A": "增加传统行业的投资",
+            "B": "深化供给侧结构性改革",
+            "C": "推动科技创新和产业升级",
+            "D": "加大基础设施建设投入"
+        },
+        "correctAnswer": ["B", "C"]
+    },
+    {
+        "question": "问题 22: 党的二十届三中全会提出，全面推进乡村振兴战略的重要内容包括哪些？",
+        "options": {
+            "A": "提高农业产值和农民收入",
+            "B": "发展农村集体经济",
+            "C": "推进农业现代化和绿色发展",
+            "D": "加强农村教育和医疗保障"
+        },
+        "correctAnswer": ["B", "C", "D"]
+    },
+    {
+        "question": "问题 23: 党的二十届三中全会提出，要加强和创新社会治理，具体措施包括哪些？",
+        "options": {
+            "A": "强化党对社会治理的领导",
+            "B": "提升公共服务的普惠性和公平性",
+            "C": "完善社会治理法律体系",
+            "D": "建立健全社会治安防控体系"
+        },
+        "correctAnswer": ["A", "B", "C"]
+    },
+    {
+        "question": "问题 24: 党的二十届三中全会提出，推动科技创新的战略路径包括哪些？",
+        "options": {
+            "A": "加强基础研究和原始创新",
+            "B": "强化产学研合作，推动科技成果转化",
+            "C": "提高研发投入，支持科技企业",
+            "D": "加强对外科技合作，借鉴先进经验"
+        },
+        "correctAnswer": ["A", "B", "C"]
+    },
+    {
+        "question": "问题 25: 党的二十届三中全会提出，深化党风廉政建设和反腐败斗争的主要措施有哪些？",
+        "options": {
+            "A": "加强党的纪律检查和监督",
+            "B": "提高领导干部的廉政风险防控能力",
+            "C": "深化金融反腐，打击金融腐败",
+            "D": "推进政务公开，增强透明度"
+        },
+        "correctAnswer": ["A", "B", "D"]
+    }
+
+
+
         ];
 
         function startQuiz() {
@@ -201,34 +417,46 @@
             }
         }
 
-        function showResult() {
-            document.getElementById("quiz").style.display = "none";
-            document.getElementById("result").style.display = "block";
+    
+    function showResult() {
+        document.getElementById("quiz").style.display = "none";
+        document.getElementById("result").style.display = "block";
 
-            document.getElementById("final-message").textContent = `${userName}，您的得分是 ${score} 分`;
+        document.getElementById("final-message").textContent = `${userName}，您的得分是 ${score} 分`;
 
-            const reviewContainer = document.getElementById("review");
-            reviewContainer.innerHTML = "<h3>错题回顾:</h3>";
-            userAnswers.forEach((item, index) => {
+        const reviewContainer = document.getElementById("review");
+        reviewContainer.innerHTML = "<h3>错题回顾:</h3>";
+        let hasWrongAnswers = false;
+
+        userAnswers.forEach((item, index) => {
+            const correctAnswer = item.correctAnswer.split(", ");
+            const userAnswer = item.userAnswer.split(", ");
+            const isCorrect = JSON.stringify(userAnswer.sort()) === JSON.stringify(correctAnswer.sort());
+
+            // 只显示错题
+            if (!isCorrect) {
+                hasWrongAnswers = true;
                 const optionsHTML = Object.entries(item.options)
                     .map(([key, value]) => `${key}. ${value}`)
                     .join(" ");
                 const userAnswerHTML = `<span class="user-answer">${item.userAnswer || "未答"}</span>`;
                 const correctAnswerHTML = `<span class="correct-answer">${item.correctAnswer}</span>`;
 
+                // 显示问题编号和错题内容
                 reviewContainer.innerHTML += `
-                    <p>问题 ${index + 1}: ${item.question}</p>
+                    <p> ${item.question}</p> <!-- 显示题目编号 -->
                     <p>选项: ${optionsHTML}</p>
                     <p>你的答案: ${userAnswerHTML}，正确答案: ${correctAnswerHTML}</p>
                     <hr>
                 `;
-            });
-
-            if (reviewContainer.innerHTML === "<h3>错题回顾:</h3>") {
-                reviewContainer.innerHTML += "<p>恭喜你，全对了！</p>";
             }
-        }
+        });
 
+        // 如果没有错题，显示全对提示
+        if (!hasWrongAnswers) {
+            reviewContainer.innerHTML += "<p>恭喜你，全对了！</p>";
+        }
+    }
         function restartQuiz() {
             score = 0;
             currentQuestionIndex = 0;
