@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识问答竞赛</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 0 auto;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .options {
+            margin: 20px 0;
+        }
+        .option {
+            margin: 5px 0;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .name-input {
+            margin-bottom: 20px;
+        }
+        .review-container h3 {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .review-container p {
+            text-align: left;
+            margin: 5px 0;
+        }
+        .correct-answer {
+            color: red;
+        }
+        .user-answer {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="name-container">
+        <h1>知识问答竞赛</h1>
+        <div class="name-input">
+            <label for="name">请输入您的姓名：</label><br>
+            <input type="text" id="name" placeholder="您的姓名">
+        </div>
+        <button class="submit-btn" onclick="startQuiz()">开始答题</button>
+    </div>
+
+    <div class="quiz-container" id="quiz" style="display:none;">
+        <div class="question" id="question">问题加载中...</div>
+        <div class="options"></div>
+        <button class="submit-btn" onclick="submitAnswer()">提交答案</button>
+    </div>
+
+    <div class="quiz-container" id="result" style="display:none;">
+        <h2 id="final-message"></h2>
+        <div class="review-container" id="review"></div>
+        <button class="submit-btn" onclick="restartQuiz()">重新开始</button>
+    </div>
+
+    <script>
+        let userName = "";
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        const questionScore = 2;
+
+        const questions = [
+            {
+                question: "问题 1: 你知道HTML是什么吗？",
+                options: {
+                    A: "编程语言",
+                    B: "标记语言",
+                    C: "数据库",
+                    D: "操作系统"
+                },
+                correctAnswer: ["B"]
+            },
+            {
+                question: "问题 2: JavaScript 是什么类型的语言？",
+                options: {
+                    A: "标记语言",
+                    B: "编程语言",
+                    C: "数据库语言",
+                    D: "操作系统"
+                },
+                correctAnswer: ["B"]
+            },
+            {
+                question: "问题 3: CSS 是用来做什么的？",
+                options: {
+                    A: "编程",
+                    B: "布局和样式",
+                    C: "管理数据库",
+                    D: "网络安全"
+                },
+                correctAnswer: ["B"]
+            },
+            {
+                question: "问题 4: NIM 的用途是什么？(多选题)",
+                options: {
+                    A: "功能 1",
+                    B: "功能 2",
+                    C: "功能 3",
+                    D: "功能 4"
+                },
+                correctAnswer: ["A", "B"]
+            }
+        ];
+
+        function startQuiz() {
+            const nameInput = document.getElementById("name");
+            userName = nameInput.value.trim();
+
+            if (userName === "") {
+                alert("请输入您的姓名！");
+                return;
+            }
+
+            document.getElementById("name-container").style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const questionData = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = questionData.question;
+            const options = document.querySelector('.options');
+            options.innerHTML = '';
+
+            for (const [key, value] of Object.entries(questionData.options)) {
+                if (questionData.correctAnswer.length > 1) {
+                    options.innerHTML += `
+                        <label class="option">
+                            <input type="checkbox" name="answer" value="${key}"> ${key}. ${value}
+                        </label><br>
+                    `;
+                } else {
+                    options.innerHTML += `
+                        <label class="option">
+                            <input type="radio" name="answer" value="${key}"> ${key}. ${value}
+                        </label><br>
+                    `;
+                }
+            }
+        }
+
+        function submitAnswer() {
+            const questionData = questions[currentQuestionIndex];
+            const correctAnswer = questionData.correctAnswer;
+
+            const selectedAnswers = Array.from(
+                document.querySelectorAll('input[name="answer"]:checked')
+            ).map(input => input.value);
+
+            const isCorrect = JSON.stringify(selectedAnswers.sort()) === JSON.stringify(correctAnswer.sort());
+
+            if (isCorrect) {
+                score += questionScore;
+            } else if (selectedAnswers.some(answer => correctAnswer.includes(answer))) {
+                score += questionScore / 2;
+            }
+
+            userAnswers.push({
+                question: questionData.question,
+                options: questionData.options,
+                correctAnswer: correctAnswer.join(", "),
+                userAnswer: selectedAnswers.join(", ")
+            });
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz").style.display = "none";
+            document.getElementById("result").style.display = "block";
+
+            document.getElementById("final-message").textContent = `${userName}，您的得分是 ${score} 分`;
+
+            const reviewContainer = document.getElementById("review");
+            reviewContainer.innerHTML = "<h3>错题回顾:</h3>";
+            userAnswers.forEach((item, index) => {
+                const optionsHTML = Object.entries(item.options)
+                    .map(([key, value]) => `${key}. ${value}`)
+                    .join(" ");
+                const userAnswerHTML = `<span class="user-answer">${item.userAnswer || "未答"}</span>`;
+                const correctAnswerHTML = `<span class="correct-answer">${item.correctAnswer}</span>`;
+
+                reviewContainer.innerHTML += `
+                    <p>问题 ${index + 1}: ${item.question}</p>
+                    <p>选项: ${optionsHTML}</p>
+                    <p>你的答案: ${userAnswerHTML}，正确答案: ${correctAnswerHTML}</p>
+                    <hr>
+                `;
+            });
+
+            if (reviewContainer.innerHTML === "<h3>错题回顾:</h3>") {
+                reviewContainer.innerHTML += "<p>恭喜你，全对了！</p>";
+            }
+        }
+
+        function restartQuiz() {
+            score = 0;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            document.getElementById("name-container").style.display = "block";
+            document.getElementById("result").style.display = "none";
+            document.getElementById("quiz").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
