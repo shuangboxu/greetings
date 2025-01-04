@@ -67,18 +67,23 @@
 
     <div class="quiz-container" id="name-container">
         <h1>党的二十届三中全会精神知识竞赛</h1>
+        <div class="quiz-info">
+            <p>共50题，40个单选，10个多选<br>每题2分，多选题选对但不全对得1分</p>
+        </div>
         <div class="name-input">
             <label for="name">请输入您的姓名：</label><br>
             <input type="text" id="name" placeholder="您的姓名">
         </div>
         <button class="submit-btn" onclick="startQuiz()">开始答题</button>
     </div>
-
+    
     <div class="quiz-container" id="quiz" style="display:none;">
         <div class="question" id="question">问题加载中...</div>
         <div class="options"></div>
-        <button class="submit-btn" onclick="submitAnswer()">提交答案</button>
+        <button class="submit-btn" onclick="previousQuestion()">上一题</button>
+        <button class="submit-btn" onclick="nextQuestion()">下一题</button>
     </div>
+    
 
     <div class="quiz-container" id="result" style="display:none;">
         <h2 id="final-message"></h2>
@@ -95,14 +100,14 @@
 
         const questions = [
         {
-        "question": "问题 1: 党的二十届三中全会提出，新时代我国社会主要矛盾发生变化，新的主要矛盾是：",
+        "question": "问题 1: 党的二十届三中全会通过的纲领性文献是？",
         "options": {
-            "A": "发展不平衡不充分问题",
-            "B": "人民日益增长的物质文化需求与不平衡不充分的发展之间的矛盾",
-            "C": "资源约束和环境问题",
-            "D": "政治体制与经济体制之间的矛盾"
+            "A": "《中共中央关于深化国有企业改革的决定》",
+            "B": "《中共中央关于推进农村改革发展的决定》",
+            "C": "《中共中央关于进一步全面深化改革、推进中国式现代化的决定》",
+            "D": "《中共中央关于全面深化改革若干重大问题的决定》"
         },
-        "correctAnswer": ["B"]
+        "correctAnswer": ["C"]
     },
     {
         "question": "问题 2: 党的二十届三中全会提出，中国特色社会主义政治发展道路的核心要义是：",
@@ -205,24 +210,24 @@
         "correctAnswer": ["B"]
     },
     {
-        "question": "问题 12: 党的二十届三中全会提出，要推进高质量发展的关键措施是：",
+        "question": "问题 12: 全面建设社会主义现代化国家的首要任务是",
         "options": {
-            "A": "增加传统行业的投资",
-            "B": "深化供给侧结构性改革",
-            "C": "推动科技创新和产业升级",
-            "D": "加大基础设施建设投入"
+            "A": "城乡融合发展",
+            "B": "高质量发展",
+            "C": "发展全过程人民民主",
+            "D": "保障和改善民生"
         },
         "correctAnswer": ["B"]
     },
     {
-        "question": "问题 13: 党的二十届三中全会提出，要加强和创新社会治理，具体措施包括：",
+        "question": "问题 13: 党的二十届三中全会召开时间是？",
         "options": {
-            "A": "强化党对社会治理的领导",
-            "B": "提升公共服务的普惠性和公平性",
-            "C": "完善社会治理法律体系",
-            "D": "建立健全社会治安防控体系"
+            "A": "2023年10月10日至13日",
+            "B": "2024年7月15日至18日",
+            "C": "2024年12月1日至4日",
+            "D": "2025年1月1日至4日"
         },
-        "correctAnswer": ["A"]
+        "correctAnswer": ["B"]
     },
     {
         "question": "问题 14: 党的二十届三中全会提出，进一步优化产业结构的重点是：",
@@ -235,24 +240,24 @@
         "correctAnswer": ["B"]
     },
     {
-        "question": "问题 15: 党的二十届三中全会提出，要促进城乡融合发展，关键措施是：",
+        "question": "问题 15: （）是中国式现代化的重大任务。",
         "options": {
-            "A": "坚持公共资源均衡分配",
-            "B": "鼓励城市人口向乡村流动",
-            "C": "推动农业转移人口市民化",
-            "D": "强化乡村教育与医疗保障"
+            "A": "城乡融合发展",
+            "B": "健全城乡基层治理体系",
+            "C": "在发展中保障和改善民生",
+            "D": "不断满足人民对美好生活的向往"
         },
         "correctAnswer": ["C"]
     },
     {
-        "question": "问题 16: 党的二十届三中全会明确，中国式现代化的发展模式是基于：",
+        "question": "问题 16: 健全（ ）国家战略体系和能力建设工作机制，完善涉军决策议事协调体制机制。",
         "options": {
-            "A": "社会主义市场经济体制",
-            "B": "政治稳定",
-            "C": "高度自治的地方政府",
-            "D": "对外依赖的经济体制"
+            "A": "现代化",
+            "B": "规范化",
+            "C": "多元化",
+            "D": "一体化"
         },
-        "correctAnswer": ["A"]
+        "correctAnswer": ["D"]
     },
     {
         "question": "问题 17: 党的二十届三中全会提出的深化改革总目标是：",
@@ -275,78 +280,75 @@
         "correctAnswer": ["A"]
     },
     {
-        "question": "问题 19: 党的二十届三中全会强调，要加大对外开放的措施是：",
+        "question": "问题 19: 全会强调，要完善产权保护、市场准入、公平竞争、社会信用等市场经济基础性制度，这体现了全会对于哪一方面的重视？",
         "options": {
-            "A": "实行贸易保护政策",
-            "B": "扩大自由贸易区建设",
-            "C": "降低外资准入门槛",
-            "D": "增加跨国公司税收"
+            "A": "政治体制改革",
+            "B": "经济体制改革",
+            "C": "文化体制改革",
+            "D": "社会体制改革"
         },
         "correctAnswer": ["B"]
     },
     {
-        "question": "问题 20: 党的二十届三中全会提出，要加强党风廉政建设，主要措施是：",
+        "question": "问题 20: 到哪年，全面建成高水平社会主义市场经济体制?",
         "options": {
-            "A": "强化纪律检查和监督",
-            "B": "提高领导干部廉政风险防控能力",
-            "C": "推进政务公开",
-            "D": "增加政府透明度"
+            "A": "2020年",
+            "B": "2035年",
+            "C": "2045年",
+            "D": "2050年"
         },
-        "correctAnswer": ["A"]
+        "correctAnswer": ["B"]
     },
     {
-        "question": "问题 21: 党的二十届三中全会提出，推动经济高质量发展的关键措施包括哪些？",
+        "question": "问题21：党的二十届三中全会强调，全党必须求真务实抓落实、敢作善为抓落实，坚持上下协同、条块结合，科学制定改革()（多选题）",
         "options": {
-            "A": "增加传统行业的投资",
-            "B": "深化供给侧结构性改革",
-            "C": "推动科技创新和产业升级",
-            "D": "加大基础设施建设投入"
-        },
-        "correctAnswer": ["B", "C"]
-    },
-    {
-        "question": "问题 22: 党的二十届三中全会提出，全面推进乡村振兴战略的重要内容包括哪些？",
-        "options": {
-            "A": "提高农业产值和农民收入",
-            "B": "发展农村集体经济",
-            "C": "推进农业现代化和绿色发展",
-            "D": "加强农村教育和医疗保障"
-        },
-        "correctAnswer": ["B", "C", "D"]
-    },
-    {
-        "question": "问题 23: 党的二十届三中全会提出，要加强和创新社会治理，具体措施包括哪些？",
-        "options": {
-            "A": "强化党对社会治理的领导",
-            "B": "提升公共服务的普惠性和公平性",
-            "C": "完善社会治理法律体系",
-            "D": "建立健全社会治安防控体系"
+            "A": "任务书",
+            "B": "时间表",
+            "C": "优先序",
+            "D": "路线图"
         },
         "correctAnswer": ["A", "B", "C"]
     },
     {
-        "question": "问题 24: 党的二十届三中全会提出，推动科技创新的战略路径包括哪些？",
+        "question": "问题22：下列产业中，属于战略性产业的是：（多选题）",
         "options": {
-            "A": "加强基础研究和原始创新",
-            "B": "强化产学研合作，推动科技成果转化",
-            "C": "提高研发投入，支持科技企业",
-            "D": "加强对外科技合作，借鉴先进经验"
+            "A": "人工智能",
+            "B": "航空航天",
+            "C": "高端装备",
+            "D": "生物医药"
+        },
+        "correctAnswer": ["A", "B", "C","D"]
+    },
+    {
+        "question": "问题23《决定》指出，坚持和发展新时代'枫桥经验'，健全党组织领导的（）相结合的城乡基层治理体系，完善共建共治共享的社会治理制度。（多选题）",
+        "options": {
+            "A": "自治",
+            "B": "法治",
+            "C": "德治",
+            "D": "智治"
         },
         "correctAnswer": ["A", "B", "C"]
     },
     {
-        "question": "问题 25: 党的二十届三中全会提出，深化党风廉政建设和反腐败斗争的主要措施有哪些？",
+        "question": "问题24：《决定》指出，保持以党的自我革命引领社会革命的高度自觉，坚持用（）管党治党，完善党的自我革命制度规范体系。（多选题）",
         "options": {
-            "A": "加强党的纪律检查和监督",
-            "B": "提高领导干部的廉政风险防控能力",
-            "C": "深化金融反腐，打击金融腐败",
-            "D": "推进政务公开，增强透明度"
+            "A": "改革精神",
+            "B": "创新精神",
+            "C": "严的标准",
+            "D": "法治思维"
         },
-        "correctAnswer": ["A", "B", "D"]
+        "correctAnswer": ["A", "C"]
+    },
+    {
+        "question": "问题25：《中共中央关于进一步全面深化改革、推进中国式现代化的决定》指出，到二〇三五年()（多选题）",
+        "options": {
+            "A": "全面建成高水平社会主义市场经济体制",
+            "B": "基本实现国家治理体系和治理能力现代化",
+            "C": "基本实现社会主义现代化",
+            "D": "中国特色社会主义制度更加完善"
+        },
+        "correctAnswer": ["A", "B", "C", "D"]
     }
-
-
-
         ];
 
         function startQuiz() {
@@ -364,60 +366,82 @@
         }
 
         function loadQuestion() {
-            const questionData = questions[currentQuestionIndex];
-            document.getElementById("question").textContent = questionData.question;
-            const options = document.querySelector('.options');
-            options.innerHTML = '';
+    const questionData = questions[currentQuestionIndex];
+    document.getElementById("question").textContent = questionData.question;
+    const options = document.querySelector('.options');
+    options.innerHTML = '';
 
-            for (const [key, value] of Object.entries(questionData.options)) {
-                if (questionData.correctAnswer.length > 1) {
-                    options.innerHTML += `
-                        <label class="option">
-                            <input type="checkbox" name="answer" value="${key}"> ${key}. ${value}
-                        </label><br>
-                    `;
-                } else {
-                    options.innerHTML += `
-                        <label class="option">
-                            <input type="radio" name="answer" value="${key}"> ${key}. ${value}
-                        </label><br>
-                    `;
-                }
-            }
+    for (const [key, value] of Object.entries(questionData.options)) {
+        if (questionData.correctAnswer.length > 1) {
+            options.innerHTML += `
+                <label class="option">
+                    <input type="checkbox" name="answer" value="${key}"> ${key}. ${value}
+                </label><br>
+            `;
+        } else {
+            options.innerHTML += `
+                <label class="option">
+                    <input type="radio" name="answer" value="${key}"> ${key}. ${value}
+                </label><br>
+            `;
         }
+    }
 
-        function submitAnswer() {
-            const questionData = questions[currentQuestionIndex];
-            const correctAnswer = questionData.correctAnswer;
-
-            const selectedAnswers = Array.from(
-                document.querySelectorAll('input[name="answer"]:checked')
-            ).map(input => input.value);
-
-            const isCorrect = JSON.stringify(selectedAnswers.sort()) === JSON.stringify(correctAnswer.sort());
-
-            if (isCorrect) {
-                score += questionScore;
-            } else if (selectedAnswers.some(answer => correctAnswer.includes(answer))) {
-                score += questionScore / 2;
+    // 如果是多选题，预选答案
+    if (userAnswers[currentQuestionIndex]) {
+        const selectedAnswers = userAnswers[currentQuestionIndex].userAnswer.split(", ");
+        document.querySelectorAll('input[name="answer"]').forEach(input => {
+            if (selectedAnswers.includes(input.value)) {
+                input.checked = true;
             }
+        });
+    }
+}
 
-            userAnswers.push({
-                question: questionData.question,
-                options: questionData.options,
-                correctAnswer: correctAnswer.join(", "),
-                userAnswer: selectedAnswers.join(", ")
-            });
 
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
-        }
+function nextQuestion() {
+    // 保存当前题目答案
+    const questionData = questions[currentQuestionIndex];
+    const correctAnswer = questionData.correctAnswer;
 
-    
+    const selectedAnswers = Array.from(
+        document.querySelectorAll('input[name="answer"]:checked')
+    ).map(input => input.value);
+
+    const isCorrect = JSON.stringify(selectedAnswers.sort()) === JSON.stringify(correctAnswer.sort());
+
+    if (isCorrect) {
+        score += questionScore;
+    } else if (selectedAnswers.some(answer => correctAnswer.includes(answer))) {
+        score += questionScore / 2;
+    }
+
+    // 保存当前题目的答案
+    userAnswers[currentQuestionIndex] = {
+        question: questionData.question,
+        options: questionData.options,
+        correctAnswer: correctAnswer.join(", "),
+        userAnswer: selectedAnswers.join(", ")
+    };
+
+    // 移动到下一题
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+    } else {
+        alert("已经是第一题！");
+    }
+}
+
     function showResult() {
         document.getElementById("quiz").style.display = "none";
         document.getElementById("result").style.display = "block";
