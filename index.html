@@ -1,495 +1,120 @@
 <!DOCTYPE html>
+<!-- 语言为中文 -->
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>党的二十届三中全会精神知识竞赛</title>
+    <title>生日快乐!</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
             text-align: center;
-            padding: 20px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4, #fad0c4, #ffd1ff);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            overflow: hidden;
         }
-        .quiz-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            margin: 0 auto;
+        h1 {
+            color: rgb(83, 64, 64);
+            font-size: 3em;
+            margin-top: 50px;
+            animation: fadeIn 2s ease-in;
+            /* 两秒内淡入 */
         }
-        .question {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .option {
-            margin: 5px 0;
-            text-align: left; /* 保持左对齐 */
-            display: block; /* 强制选项为块级布局，确保对齐有效 */
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50% 50% 60% 60%;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            animation: float 5s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .options {
-            text-align: left; /* 确保选项容器本身的文字左对齐 */
+        .string {
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: transparent;
         }
-        .submit-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .string::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            background-color: black;
+            left: 0;
+            animation: wave 1s infinite ease-in-out;
         }
-        .submit-btn:hover {
-            background-color: #45a049;
+        .star {
+            position: absolute;
+            width: 20px;  /* 控制五角星的大小 */
+            height: 20px; /* 控制五角星的大小 */
+            background-color: rgb(255, 223, 0);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 1s infinite alternate;
         }
-        .name-input {
-            margin-bottom: 20px;
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
-        .review-container h3 {
-            margin-top: 20px;
-            text-align: left;
+
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+            100% { transform: rotate(0deg); }
         }
-        .review-container p {
-            text-align: left;
-            margin: 5px 0;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        .correct-answer {
-            color: red;
-        }
-        .user-answer {
-            color: blue;
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
-
-    <div class="quiz-container" id="name-container">
-        <h1>党的二十届三中全会精神知识竞赛</h1>
-        <div class="quiz-info">
-            <p>共50题，40个单选，10个多选<br>每题2分，多选题选对但不全对得1分</p>
-        </div>
-        <div class="name-input">
-            <label for="name">请输入您的姓名：</label><br>
-            <input type="text" id="name" placeholder="您的姓名">
-        </div>
-        <button class="submit-btn" onclick="startQuiz()">开始答题</button>
-    </div>
-    
-    <div class="quiz-container" id="quiz" style="display:none;">
-        <div class="question" id="question">问题加载中...</div>
-        <div class="options"></div>
-        <button class="submit-btn" onclick="previousQuestion()">上一题</button>
-        <button class="submit-btn" onclick="nextQuestion()">下一题</button>
-    </div>
-    
-
-    <div class="quiz-container" id="result" style="display:none;">
-        <h2 id="final-message"></h2>
-        <div class="review-container" id="review"></div>
-        <button class="submit-btn" onclick="restartQuiz()">重新开始</button>
-    </div>
-
+    <h1>🎉 生日快乐！🎂</h1>
     <script>
-        let userName = "";
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let userAnswers = [];
-        const questionScore = 2;
-
-        const questions = [
-        {
-        "question": "问题 1: 党的二十届三中全会通过的纲领性文献是？",
-        "options": {
-            "A": "《中共中央关于深化国有企业改革的决定》",
-            "B": "《中共中央关于推进农村改革发展的决定》",
-            "C": "《中共中央关于进一步全面深化改革、推进中国式现代化的决定》",
-            "D": "《中共中央关于全面深化改革若干重大问题的决定》"
-        },
-        "correctAnswer": ["C"]
-    },
-    {
-        "question": "问题 2: 党的二十届三中全会提出，中国特色社会主义政治发展道路的核心要义是：",
-        "options": {
-            "A": "社会主义民主政治",
-            "B": "加强党对一切工作的领导",
-            "C": "实现人民当家作主",
-            "D": "保障公民基本权利"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 3: 党的二十届三中全会提出，全面推进乡村振兴的战略重点是：",
-        "options": {
-            "A": "增加农业产值",
-            "B": "改善农村基础设施",
-            "C": "发展现代农业，推动农业绿色发展",
-            "D": "提高农村教育水平"
-        },
-        "correctAnswer": ["C"]
-    },
-    {
-        "question": "问题 4: 党的二十届三中全会提出，中国特色社会主义经济制度的核心是：",
-        "options": {
-            "A": "改革创新",
-            "B": "开放型经济",
-            "C": "公有制为主体、多种所有制经济共同发展的基本经济制度",
-            "D": "实现共同富裕"
-        },
-        "correctAnswer": ["C"]
-    },
-    {
-        "question": "问题 5: 党的二十届三中全会提出，要推动科技创新的战略方向是：",
-        "options": {
-            "A": "加大基础研究投入，促进关键核心技术突破",
-            "B": "加强高新技术企业扶持",
-            "C": "依靠国际科技合作实现突破",
-            "D": "完善知识产权保护机制"
-        },
-        "correctAnswer": ["A"]
-    },
-    {
-        "question": "问题 6: 党的二十届三中全会提出，要加强国家治理现代化，核心目标之一是：",
-        "options": {
-            "A": "提高政治效率",
-            "B": "推动法治建设",
-            "C": "促进经济快速增长",
-            "D": "增强社会整体稳定"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 7: 党的二十届三中全会提出，要深化党和国家机构改革，重点是：",
-        "options": {
-            "A": "改进党的组织结构",
-            "B": "优化国家治理结构，提升治理效能",
-            "C": "提高行政效率，减少政府职能",
-            "D": "增强军队现代化能力"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 8: 党的二十届三中全会提出，进一步加强生态文明建设的核心任务是：",
-        "options": {
-            "A": "加快能源结构转型",
-            "B": "完善环境保护法制体系",
-            "C": "推动绿色低碳发展",
-            "D": "促进资源循环利用"
-        },
-        "correctAnswer": ["C"]
-    },
-    {
-        "question": "问题 9: 党的二十届三中全会提出，教育领域改革的主要方向是：",
-        "options": {
-            "A": "优化教育资源配置，提升教育公平性",
-            "B": "加强职业教育体系建设",
-            "C": "提高高等教育的国际化水平",
-            "D": "增强思想政治教育的权威性"
-        },
-        "correctAnswer": ["A"]
-    },
-    {
-        "question": "问题 10: 党的二十届三中全会提出，必须深化和完善的国有企业改革的方向是：",
-        "options": {
-            "A": "完全市场化",
-            "B": "增强国有资本的战略功能",
-            "C": "逐步私有化",
-            "D": "向民营企业学习"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 11: 党的二十届三中全会提出，推动中国式现代化的核心要求是：",
-        "options": {
-            "A": "深化全面改革，加强党内治理",
-            "B": "坚持党的领导和人民主权统一",
-            "C": "加强生态环境保护",
-            "D": "推动全社会共同富裕"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 12: 全面建设社会主义现代化国家的首要任务是",
-        "options": {
-            "A": "城乡融合发展",
-            "B": "高质量发展",
-            "C": "发展全过程人民民主",
-            "D": "保障和改善民生"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 13: 党的二十届三中全会召开时间是？",
-        "options": {
-            "A": "2023年10月10日至13日",
-            "B": "2024年7月15日至18日",
-            "C": "2024年12月1日至4日",
-            "D": "2025年1月1日至4日"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 14: 党的二十届三中全会提出，进一步优化产业结构的重点是：",
-        "options": {
-            "A": "增加传统行业投资",
-            "B": "促进先进制造业发展",
-            "C": "支持中小企业创新",
-            "D": "推动农村经济发展"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 15: （）是中国式现代化的重大任务。",
-        "options": {
-            "A": "城乡融合发展",
-            "B": "健全城乡基层治理体系",
-            "C": "在发展中保障和改善民生",
-            "D": "不断满足人民对美好生活的向往"
-        },
-        "correctAnswer": ["C"]
-    },
-    {
-        "question": "问题 16: 健全（ ）国家战略体系和能力建设工作机制，完善涉军决策议事协调体制机制。",
-        "options": {
-            "A": "现代化",
-            "B": "规范化",
-            "C": "多元化",
-            "D": "一体化"
-        },
-        "correctAnswer": ["D"]
-    },
-    {
-        "question": "问题 17: 党的二十届三中全会提出的深化改革总目标是：",
-        "options": {
-            "A": "完善中国特色社会主义制度",
-            "B": "促进经济转型",
-            "C": "提高人民幸福感",
-            "D": "推动经济全球化"
-        },
-        "correctAnswer": ["A"]
-    },
-    {
-        "question": "问题 18: 党的二十届三中全会提出，要深化科技创新，需重点：",
-        "options": {
-            "A": "加强产学研合作",
-            "B": "完善知识产权保护",
-            "C": "增加科技预算",
-            "D": "引进外国技术"
-        },
-        "correctAnswer": ["A"]
-    },
-    {
-        "question": "问题 19: 全会强调，要完善产权保护、市场准入、公平竞争、社会信用等市场经济基础性制度，这体现了全会对于哪一方面的重视？",
-        "options": {
-            "A": "政治体制改革",
-            "B": "经济体制改革",
-            "C": "文化体制改革",
-            "D": "社会体制改革"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题 20: 到哪年，全面建成高水平社会主义市场经济体制?",
-        "options": {
-            "A": "2020年",
-            "B": "2035年",
-            "C": "2045年",
-            "D": "2050年"
-        },
-        "correctAnswer": ["B"]
-    },
-    {
-        "question": "问题21：党的二十届三中全会强调，全党必须求真务实抓落实、敢作善为抓落实，坚持上下协同、条块结合，科学制定改革()（多选题）",
-        "options": {
-            "A": "任务书",
-            "B": "时间表",
-            "C": "优先序",
-            "D": "路线图"
-        },
-        "correctAnswer": ["A", "B", "C"]
-    },
-    {
-        "question": "问题22：下列产业中，属于战略性产业的是：（多选题）",
-        "options": {
-            "A": "人工智能",
-            "B": "航空航天",
-            "C": "高端装备",
-            "D": "生物医药"
-        },
-        "correctAnswer": ["A", "B", "C","D"]
-    },
-    {
-        "question": "问题23《决定》指出，坚持和发展新时代'枫桥经验'，健全党组织领导的（）相结合的城乡基层治理体系，完善共建共治共享的社会治理制度。（多选题）",
-        "options": {
-            "A": "自治",
-            "B": "法治",
-            "C": "德治",
-            "D": "智治"
-        },
-        "correctAnswer": ["A", "B", "C"]
-    },
-    {
-        "question": "问题24：《决定》指出，保持以党的自我革命引领社会革命的高度自觉，坚持用（）管党治党，完善党的自我革命制度规范体系。（多选题）",
-        "options": {
-            "A": "改革精神",
-            "B": "创新精神",
-            "C": "严的标准",
-            "D": "法治思维"
-        },
-        "correctAnswer": ["A", "C"]
-    },
-    {
-        "question": "问题25：《中共中央关于进一步全面深化改革、推进中国式现代化的决定》指出，到二〇三五年()（多选题）",
-        "options": {
-            "A": "全面建成高水平社会主义市场经济体制",
-            "B": "基本实现国家治理体系和治理能力现代化",
-            "C": "基本实现社会主义现代化",
-            "D": "中国特色社会主义制度更加完善"
-        },
-        "correctAnswer": ["A", "B", "C", "D"]
-    }
-        ];
-
-        function startQuiz() {
-            const nameInput = document.getElementById("name");
-            userName = nameInput.value.trim();
-
-            if (userName === "") {
-                alert("请输入您的姓名！");
-                return;
-            }
-
-            document.getElementById("name-container").style.display = "none";
-            document.getElementById("quiz").style.display = "block";
-            loadQuestion();
+        function createBalloon() {
+            const balloon = document.createElement("div");
+            balloon.className = "balloon";
+            balloon.style.left = Math.random() * window.innerWidth + "px";
+            balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 80%)`;
+            balloon.style.animationDuration = (Math.random() * 3 + 3) + "s";
+            
+            const string = document.createElement("div");
+            string.className = "string";
+            balloon.appendChild(string);
+            
+            document.body.appendChild(balloon);
+            setTimeout(() => document.body.removeChild(balloon), 5000);
         }
 
-        function loadQuestion() {
-    const questionData = questions[currentQuestionIndex];
-    document.getElementById("question").textContent = questionData.question;
-    const options = document.querySelector('.options');
-    options.innerHTML = '';
+        function createStar() {
+            const star = document.createElement("div");
+            star.className = "star";
+            star.style.top = Math.random() * window.innerHeight + "px";
+            star.style.left = Math.random() * window.innerWidth + "px";
+            star.style.animationDuration = (Math.random() * 2 + 1) + "s"; // 随机闪烁速度
+            document.body.appendChild(star);
 
-    for (const [key, value] of Object.entries(questionData.options)) {
-        if (questionData.correctAnswer.length > 1) {
-            options.innerHTML += `
-                <label class="option">
-                    <input type="checkbox" name="answer" value="${key}"> ${key}. ${value}
-                </label><br>
-            `;
-        } else {
-            options.innerHTML += `
-                <label class="option">
-                    <input type="radio" name="answer" value="${key}"> ${key}. ${value}
-                </label><br>
-            `;
-        }
-    }
-
-    // 如果是多选题，预选答案
-    if (userAnswers[currentQuestionIndex]) {
-        const selectedAnswers = userAnswers[currentQuestionIndex].userAnswer.split(", ");
-        document.querySelectorAll('input[name="answer"]').forEach(input => {
-            if (selectedAnswers.includes(input.value)) {
-                input.checked = true;
-            }
-        });
-    }
+            // 设置星星在几秒钟后删除，避免页面元素过多
+            setTimeout(() => document.body.removeChild(star), 5000);
 }
 
+        setInterval(createStar, 200); // 每200ms创建一个星星
 
-function nextQuestion() {
-    // 保存当前题目答案
-    const questionData = questions[currentQuestionIndex];
-    const correctAnswer = questionData.correctAnswer;
-
-    const selectedAnswers = Array.from(
-        document.querySelectorAll('input[name="answer"]:checked')
-    ).map(input => input.value);
-
-    const isCorrect = JSON.stringify(selectedAnswers.sort()) === JSON.stringify(correctAnswer.sort());
-
-    if (isCorrect) {
-        score += questionScore;
-    } else if (selectedAnswers.some(answer => correctAnswer.includes(answer))) {
-        score += questionScore / 2;
-    }
-
-    // 保存当前题目的答案
-    userAnswers[currentQuestionIndex] = {
-        question: questionData.question,
-        options: questionData.options,
-        correctAnswer: correctAnswer.join(", "),
-        userAnswer: selectedAnswers.join(", ")
-    };
-
-    // 移动到下一题
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion();
-    } else {
-        showResult();
-    }
-}
-
-function previousQuestion() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        loadQuestion();
-    } else {
-        alert("已经是第一题！");
-    }
-}
-
-    function showResult() {
-        document.getElementById("quiz").style.display = "none";
-        document.getElementById("result").style.display = "block";
-
-        document.getElementById("final-message").textContent = `${userName}，您的得分是 ${score} 分`;
-
-        const reviewContainer = document.getElementById("review");
-        reviewContainer.innerHTML = "<h3>错题回顾:</h3>";
-        let hasWrongAnswers = false;
-
-        userAnswers.forEach((item, index) => {
-            const correctAnswer = item.correctAnswer.split(", ");
-            const userAnswer = item.userAnswer.split(", ");
-            const isCorrect = JSON.stringify(userAnswer.sort()) === JSON.stringify(correctAnswer.sort());
-
-            // 只显示错题
-            if (!isCorrect) {
-                hasWrongAnswers = true;
-                const optionsHTML = Object.entries(item.options)
-                    .map(([key, value]) => `${key}. ${value}`)
-                    .join(" ");
-                const userAnswerHTML = `<span class="user-answer">${item.userAnswer || "未答"}</span>`;
-                const correctAnswerHTML = `<span class="correct-answer">${item.correctAnswer}</span>`;
-
-                // 显示问题编号和错题内容
-                reviewContainer.innerHTML += `
-                    <p> ${item.question}</p> <!-- 显示题目编号 -->
-                    <p>选项: ${optionsHTML}</p>
-                    <p>你的答案: ${userAnswerHTML}，正确答案: ${correctAnswerHTML}</p>
-                    <hr>
-                `;
-            }
-        });
-
-        // 如果没有错题，显示全对提示
-        if (!hasWrongAnswers) {
-            reviewContainer.innerHTML += "<p>恭喜你，全对了！</p>";
-        }
-    }
-        function restartQuiz() {
-            score = 0;
-            currentQuestionIndex = 0;
-            userAnswers = [];
-            document.getElementById("name-container").style.display = "block";
-            document.getElementById("result").style.display = "none";
-            document.getElementById("quiz").style.display = "none";
-        }
+        setInterval(createBalloon, 500);
     </script>
-
 </body>
 </html>
