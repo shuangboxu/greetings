@@ -1,0 +1,3 @@
+baseurl: ""  # 可以为空
+url: "https://shuangboxu.github.io"
+theme: jekyll-theme-primer  # 如果需要使用 Jekyll 主题，可以加上这行
